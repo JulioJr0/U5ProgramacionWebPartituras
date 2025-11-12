@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36603.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U5ProgWebPartituras", "U5ProgWebPartituras\U5ProgWebPartituras.csproj", "{DB24BF82-50FF-4BE5-ADE1-12879A22835B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB24BF82-50FF-4BE5-ADE1-12879A22835B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB24BF82-50FF-4BE5-ADE1-12879A22835B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB24BF82-50FF-4BE5-ADE1-12879A22835B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB24BF82-50FF-4BE5-ADE1-12879A22835B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A58419AC-50C9-4260-9B51-537604F57F66}
+	EndGlobalSection
+EndGlobal
