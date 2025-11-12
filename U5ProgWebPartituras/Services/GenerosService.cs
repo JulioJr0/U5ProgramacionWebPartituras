@@ -14,7 +14,7 @@ namespace U5ProgWebPartituras.Services
         //Para el filtro
         public IEnumerable<string> ListaGeneros()
         {
-            return GeneroRepository.GetAll().OrderBy(x=> x.Id).Select(x=> x.Nombre);
+            return GeneroRepository.GetAll().OrderBy(x=> x.Nombre).Select(x=> x.Nombre);
         }
 
 

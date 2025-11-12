@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using U5ProgWebPartituras.Areas.Admin.Models;
 using U5ProgWebPartituras.Models.Entities;
 using U5ProgWebPartituras.Models.ViewModels;
 using U5ProgWebPartituras.Repositories;
@@ -98,7 +99,40 @@ namespace U5ProgWebPartituras.Services
             //throw new NotImplementedException();
         }
         //Admin
-        
+        //Index Get
+        public IndexAdminPartiturasViewModel GetAllPartituras(int? idFiltroGenero)
+        {
+            IndexAdminPartiturasViewModel vm = new();
+            vm.Partituras = RepositoryPartitura.GetAll().OrderBy(x => x.Id).Select(x => new PartituraModel
+            {
+                Id = x.Id,
+                Titulo = x.Titulo,
+                Compositor = x.IdCompositorNavigation.Nombre,
+                GeneroMusical = x.IdGeneroNavigation.Nombre,
+                Dificultad = x.Dificultad,
+                Instrumentacion = x.Instrumentacion??"Instrumento: ?"
+            });
+            vm.IdGeneroSeleccionado = idFiltroGenero ?? 0;
+            return vm;
+            //return new IndexAdminPartiturasViewModel
+            //{
+            //    Partituras = RepositoryPartitura.GetAll().OrderBy(x => x.Id).Select(x => new PartituraModel
+            //    {
+            //        Id = x.Id,
+            //        Titulo = x.Titulo,
+            //        Compositor = x.IdCompositorNavigation.Nombre,
+            //        GeneroMusical = x.IdGeneroNavigation.Nombre,
+            //        Dificultad = x.Dificultad,
+            //        Instrumentacion = x.Instrumentacion
+            //    })
+            //};
+        }
+        //Agregar
+        //Get
+        public AgregarAdminPartiturasViewMode GetForAgregar()
+        {
+
+        }
 
 
 
