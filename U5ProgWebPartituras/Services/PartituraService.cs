@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using U5ProgWebPartituras.Areas.Admin.Models;
 using U5ProgWebPartituras.Models.Entities;
 using U5ProgWebPartituras.Models.ViewModels;
@@ -11,12 +12,15 @@ namespace U5ProgWebPartituras.Services
         public Repository<Partitura> RepositoryPartitura { get; }
         public Repository<Genero> RepositoryGenero { get; }
         public Repository<Compositor> RepositoryCompositor { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
-        public PartituraService(Repository<Partitura> repositoryPartitura, Repository<Genero> repositoryGenero, Repository<Compositor> repositoryCompositor)
+        public PartituraService(Repository<Partitura> repositoryPartitura, Repository<Genero> repositoryGenero, Repository<Compositor> repositoryCompositor,
+            IWebHostEnvironment webHostEnvironment)
         {
             RepositoryPartitura = repositoryPartitura;
             RepositoryGenero = repositoryGenero;
             RepositoryCompositor = repositoryCompositor;
+            WebHostEnvironment = webHostEnvironment;
         }
         //
         public int GetNumeroPartituras()
@@ -103,6 +107,11 @@ namespace U5ProgWebPartituras.Services
         public IndexAdminPartiturasViewModel GetAllPartituras(int? idFiltroGenero)
         {
             IndexAdminPartiturasViewModel vm = new();
+            vm.Generos = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            {
+                Id = x.Id,
+                Nombre = x.Nombre
+            });
             vm.Partituras = RepositoryPartitura.GetAll().OrderBy(x => x.Id).Select(x => new PartituraModel
             {
                 Id = x.Id,
@@ -114,33 +123,78 @@ namespace U5ProgWebPartituras.Services
             });
             vm.IdGeneroSeleccionado = idFiltroGenero ?? 0;
             return vm;
-            //return new IndexAdminPartiturasViewModel
-            //{
-            //    Partituras = RepositoryPartitura.GetAll().OrderBy(x => x.Id).Select(x => new PartituraModel
-            //    {
-            //        Id = x.Id,
-            //        Titulo = x.Titulo,
-            //        Compositor = x.IdCompositorNavigation.Nombre,
-            //        GeneroMusical = x.IdGeneroNavigation.Nombre,
-            //        Dificultad = x.Dificultad,
-            //        Instrumentacion = x.Instrumentacion
-            //    })
-            //};
         }
         //Agregar
         //Get
         public AgregarAdminPartiturasViewMode GetForAgregar()
         {
+            AgregarAdminPartiturasViewMode vm = new();
+            vm.GenerosLista = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            {
+                Id = x.Id,
+                Nombre = x.Nombre
+            });
+            vm.CompositoresLista = RepositoryCompositor.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            {
+                Id = x.Id,
+                Nombre = x.Nombre
+            });
+            return vm;
+        }
+        //post
+        public void Agregar(AgregarAdminPartiturasViewMode vm)
+        {
+            var entidad = new Partitura
+            {
+                Id = 0,
+                Titulo = vm.Titulo,
+                Instrumentacion = vm.Instrumentacion,
+                Dificultad = vm.Dificultad,
+                Descripcion = vm.Descripcion,
+                IdCompositor = vm.IdCompositor,
+                IdGenero = vm.IdGenero
+            };//EF cunado agrega algo, el id va como 0. 
+            RepositoryPartitura.Insert(entidad); //antes de estto no sé el id autoincrementable
+            var id = entidad.Id; //el valor es autoincrementable. EF lo trae.
 
+            if (vm.Pdf != null)
+            {
+                AgregarPdf(vm.Pdf, id);
+            }
+            else
+            {
+                throw new ArgumentException("El archivo PDF/Partitura es obligatorio.");
+            }
+
+            if (vm.Audio != null)
+            {
+                AgregarAudio(vm.Audio, id);
+            }
         }
 
+        private void AgregarAudio(IFormFile audio, int idPartitura)
+        {
+            throw new NotImplementedException();
+        }
 
+        private void AgregarPdf(IFormFile archivo, int idPartitura)
+        {
+            if (archivo.Length>1024*1024*5)
+            {
+                throw new ArgumentException("El archivo PDF o imagen de la partitura debe ser de 5MB o menos.");
+            }
+            if (archivo.ContentType != "application/pdf" && archivo.ContentType != "image/jpeg")
+            {
+                throw new ArgumentException("Seleccione un archivo en formato PDF o JPEG.");
+            }
 
-
-
-
-
-
-
+            string extension = (archivo.ContentType == "application/pdf") ? ".pdf" : ".jpg";
+            var carpetaPartituras = Path.Combine(WebHostEnvironment.WebRootPath, "partituras");
+            var rutaDestino = Path.Combine(carpetaPartituras, $"{idPartitura}{extension}");
+            Directory.CreateDirectory(carpetaPartituras);
+            var file = File.Create(rutaDestino);
+            archivo.CopyTo(file);
+            file.Close();
+        }
     }
 }
