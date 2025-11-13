@@ -77,14 +77,14 @@ namespace U5ProgWebPartituras.Services
             }
 
         }
-        public DetallesViewModel GetDetallesPartitura(int id)
+        public DetallesViewModel GetDetallesPartitura(int? id)
         {
             var entidad = RepositoryPartitura.GetAll().AsQueryable().Include(x => x.IdCompositorNavigation).Include(x => x.IdGeneroNavigation).Where(x=> x.Id == id).FirstOrDefault();
             if (entidad != null)
             {
                 DetallesViewModel vm = new()
                 {
-                    Id = id,
+                    Id = id??0,
                     Dificultad = entidad.
                     Titulo = entidad.Titulo,
                     Descripcion = entidad.Descripcion,
@@ -103,7 +103,7 @@ namespace U5ProgWebPartituras.Services
             //throw new NotImplementedException();
         }
         //Admin
-        //Index Get
+        //index Get
         public IndexAdminPartiturasViewModel GetAllPartituras(int? idFiltroGenero)
         {
             IndexAdminPartiturasViewModel vm = new();
@@ -124,8 +124,7 @@ namespace U5ProgWebPartituras.Services
             vm.IdGeneroSeleccionado = idFiltroGenero ?? 0;
             return vm;
         }
-        //Agregar
-        //Get
+        //agregar get
         public AgregarAdminPartiturasViewMode GetForAgregar()
         {
             AgregarAdminPartiturasViewMode vm = new();
@@ -141,7 +140,7 @@ namespace U5ProgWebPartituras.Services
             });
             return vm;
         }
-        //post
+        //agregar post
         public void Agregar(AgregarAdminPartiturasViewMode vm)
         {
             var entidad = new Partitura
@@ -172,14 +171,33 @@ namespace U5ProgWebPartituras.Services
             }
         }
 
-        private void AgregarAudio(IFormFile audio, int idPartitura)
+        private void AgregarAudio(IFormFile archivo, int idPartitura)
         {
-            throw new NotImplementedException();
+            if (archivo.Length > 1024 * 1024 * 10) // 10MB limit
+            {
+                throw new ArgumentException("El archivo de audio debe ser de 10MB o menos.");
+            }
+            if (archivo.ContentType != "audio/mpeg" && archivo.ContentType != "audio/wav")
+            {
+                throw new ArgumentException("Seleccione un archivo de audio en formato MP3 o WAV.");
+            }
+            //string extension;
+            //if (archivo.ContentType == "audio/mpeg")
+            //    extension = ".mp3";
+            //else 
+            //    extension = ".wav";
+            string extension = (archivo.ContentType == "audio/mpeg") ? ".mp3" : ".wav";
+            var carpetaAudios = Path.Combine(WebHostEnvironment.WebRootPath, "audios");
+            var rutaDestino = Path.Combine(carpetaAudios, $"{idPartitura}{extension}");
+            Directory.CreateDirectory(carpetaAudios);
+            var file = File.Create(rutaDestino);
+            archivo.CopyTo(file);
+            file.Close(); 
         }
 
         private void AgregarPdf(IFormFile archivo, int idPartitura)
         {
-            if (archivo.Length>1024*1024*5)
+            if (archivo.Length>1024*1024*4)
             {
                 throw new ArgumentException("El archivo PDF o imagen de la partitura debe ser de 5MB o menos.");
             }
@@ -196,5 +214,107 @@ namespace U5ProgWebPartituras.Services
             archivo.CopyTo(file);
             file.Close();
         }
+        //editar get
+        public EditarAdminPartiturasViewModel GetForEditar(int id)
+        {
+            var entidad = RepositoryPartitura.Get(id);
+            if (entidad == null)
+            {
+                throw new ArgumentException("Partitura no encontrada");
+            }
+            EditarAdminPartiturasViewModel vm = new();
+            vm.GenerosLista = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            {
+                Id = x.Id,
+                Nombre = x.Nombre
+            });
+            vm.CompositoresLista = RepositoryCompositor.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            {
+                Id = x.Id,
+                Nombre = x.Nombre
+            });
+            vm.Id = entidad.Id;
+            vm.Titulo = entidad.Titulo;
+            vm.IdCompositor = entidad.IdCompositor;
+            vm.IdGenero = entidad.IdGenero;
+            vm.Instrumentacion = entidad.Instrumentacion?? "Instrumento: ?";
+            vm.Dificultad = entidad.Dificultad;
+            vm.Descripcion = entidad.Descripcion;
+            return vm;
+        }
+        //editar post
+        public void Editar(EditarAdminPartiturasViewModel vm)
+        {
+            var entidad = RepositoryPartitura.Get(vm.Id);
+            if (entidad == null) { throw new ArgumentException("Partitura no existe."); }
+
+            entidad.Titulo = vm.Titulo;
+            entidad.IdCompositor = vm.IdCompositor;
+            entidad.IdGenero = vm.IdGenero;
+            entidad.Instrumentacion = vm.Instrumentacion;
+            entidad.Dificultad = vm.Dificultad;
+            entidad.Descripcion = vm.Descripcion;
+
+            RepositoryPartitura.Update(entidad);
+
+            if (vm.Pdf != null)
+            {
+                AgregarPdf(vm.Pdf, entidad.Id);
+            }
+            if (vm.Audio != null)
+            {
+                AgregarAudio(vm.Audio, entidad.Id);
+            }
+            //en el controlador me traeré los generos y partituras 
+        }
+        //eliminar get
+        public EliminarAdminPartiturasViewModel GetForEliminar(int id)
+        {
+            var entidad = RepositoryPartitura.Get(id);
+
+            if (entidad == null) { throw new ArgumentException("Partitura no existe"); }
+
+            return new EliminarAdminPartiturasViewModel
+            {
+                Id = id,
+                Nombre = entidad.Titulo
+            };
+        }
+        public void Eliminar(EliminarAdminPartiturasViewModel vm)
+        {
+            var entidad = RepositoryPartitura.Get(vm.Id);
+
+            if (entidad == null) { throw new ArgumentException("Paritura no encontrada"); }
+
+            RepositoryPartitura.Delete(entidad.Id);
+
+            var root = WebHostEnvironment.WebRootPath;
+            var rutaPdf = Path.Combine(root, "partituras", $"{vm.Id}.pdf");
+            if (File.Exists(rutaPdf))
+                File.Delete(rutaPdf);
+            
+            var rutaJpg = Path.Combine(root, "partituras", $"{vm.Id}.jpg");
+            if (File.Exists(rutaJpg))
+            {
+                File.Delete(rutaJpg);
+            }
+            var rutaMp3 = Path.Combine(root, "audios", $"{vm.Id}.mp3");
+            if (File.Exists(rutaMp3))
+            {
+                File.Delete(rutaMp3);
+            }
+            var rutaWav = Path.Combine(root, "audios", $"{vm.Id}.wav");
+            if (File.Exists(rutaWav))
+            {
+                File.Delete(rutaWav);
+            }
+        }
+
+
+
+
+
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using U5ProgWebPartituras.Models.ViewModels;
 using U5ProgWebPartituras.Services;
 
@@ -12,17 +13,28 @@ namespace U5ProgWebPartituras.Controllers
             PartituraService = partituraService;
         }
 
-        public IActionResult Index(IndexViewModel vm)
+        public IActionResult Index()
         {
-            return View();
+            var vm = PartituraService.GetPartiturasRecientesYXGenero();
+            return View(vm);
         }
-        public IActionResult Genero(GeneroViewModel vm)
+        public IActionResult Genero(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var vm = PartituraService.GetPartiturasOrdenadasXGenero(id);
+            return View(vm);
         }
-        public IActionResult Detalles(DetallesViewModel vm)
+        public IActionResult Detalles(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var vm = PartituraService.GetDetallesPartitura(id);
+            return View(vm);
         }
     }
 }
