@@ -197,7 +197,7 @@ namespace U5ProgWebPartituras.Services
 
         private void AgregarPdf(IFormFile archivo, int idPartitura)
         {
-            if (archivo.Length>1024*1024*4)
+            if (archivo.Length>1024*1024*5)
             {
                 throw new ArgumentException("El archivo PDF o imagen de la partitura debe ser de 5MB o menos.");
             }
