@@ -125,7 +125,7 @@ namespace U5ProgWebPartituras.Services
             return vm;
         }
         //agregar get
-        public AgregarAdminPartiturasViewMode GetForAgregar()
+        public AgregarAdminPartiturasViewMode GetForDropdowns()
         {
             AgregarAdminPartiturasViewMode vm = new();
             vm.GenerosLista = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
@@ -223,16 +223,16 @@ namespace U5ProgWebPartituras.Services
                 throw new ArgumentException("Partitura no encontrada");
             }
             EditarAdminPartiturasViewModel vm = new();
-            vm.GenerosLista = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
-            {
-                Id = x.Id,
-                Nombre = x.Nombre
-            });
-            vm.CompositoresLista = RepositoryCompositor.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
-            {
-                Id = x.Id,
-                Nombre = x.Nombre
-            });
+            //vm.GenerosLista = RepositoryGenero.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            //{
+            //    Id = x.Id,
+            //    Nombre = x.Nombre
+            //});
+            //vm.CompositoresLista = RepositoryCompositor.GetAll().OrderBy(x => x.Nombre).Select(x => new ItemLista
+            //{
+            //    Id = x.Id,
+            //    Nombre = x.Nombre
+            //});
             vm.Id = entidad.Id;
             vm.Titulo = entidad.Titulo;
             vm.IdCompositor = entidad.IdCompositor;
@@ -280,30 +280,30 @@ namespace U5ProgWebPartituras.Services
                 Nombre = entidad.Titulo
             };
         }
-        public void Eliminar(EliminarAdminPartiturasViewModel vm)
+        public void Eliminar(int id)
         {
-            var entidad = RepositoryPartitura.Get(vm.Id);
+            var entidad = RepositoryPartitura.Get(id);
 
             if (entidad == null) { throw new ArgumentException("Paritura no encontrada"); }
 
             RepositoryPartitura.Delete(entidad.Id);
 
             var root = WebHostEnvironment.WebRootPath;
-            var rutaPdf = Path.Combine(root, "partituras", $"{vm.Id}.pdf");
+            var rutaPdf = Path.Combine(root, "partituras", $"{id}.pdf");
             if (File.Exists(rutaPdf))
                 File.Delete(rutaPdf);
             
-            var rutaJpg = Path.Combine(root, "partituras", $"{vm.Id}.jpg");
+            var rutaJpg = Path.Combine(root, "partituras", $"{id}.jpg");
             if (File.Exists(rutaJpg))
             {
                 File.Delete(rutaJpg);
             }
-            var rutaMp3 = Path.Combine(root, "audios", $"{vm.Id}.mp3");
+            var rutaMp3 = Path.Combine(root, "audios", $"{id}.mp3");
             if (File.Exists(rutaMp3))
             {
                 File.Delete(rutaMp3);
             }
-            var rutaWav = Path.Combine(root, "audios", $"{vm.Id}.wav");
+            var rutaWav = Path.Combine(root, "audios", $"{id}.wav");
             if (File.Exists(rutaWav))
             {
                 File.Delete(rutaWav);

@@ -25,34 +25,54 @@ namespace U5ProgWebPartituras.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Agregar()
         {
-            throw new NotImplementedException();
+            var vm = PartituraService.GetForDropdowns();
+            return View(vm);
         }
 
         [HttpPost]
         public IActionResult Agregar(AgregarAdminPartiturasViewMode vm)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                vm.CompositoresLista = PartituraService.GetForDropdowns().CompositoresLista;
+                vm.GenerosLista = PartituraService.GetForDropdowns().GenerosLista;
+                return View(vm);
+            }
+            PartituraService.Agregar(vm);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            throw new NotImplementedException();
+            var vm = PartituraService.GetForEditar(id);
+            vm.GenerosLista = PartituraService.GetForDropdowns().GenerosLista;
+            vm.CompositoresLista = PartituraService.GetForDropdowns().CompositoresLista;
+            return View(vm);
         }
         [HttpPost]
         public IActionResult Editar(EditarAdminPartiturasViewModel vm)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                vm.CompositoresLista = PartituraService.GetForEditar(vm.Id).CompositoresLista;
+                vm.GenerosLista = PartituraService.GetForDropdowns().GenerosLista;
+                return View(vm);
+            }
+            PartituraService.Editar(vm);
+            return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult Eliminar()
+        public IActionResult Eliminar(int id)
         {
-            throw new NotImplementedException();
+            var vm = PartituraService.GetForEliminar(id);
+            return View(vm);
         }
         [HttpPost]
         public IActionResult Eliminar(EliminarAdminPartiturasViewModel vm)
         {
-            throw new NotImplementedException();
+            PartituraService.Eliminar(vm.Id);
+            return RedirectToAction("Index");
         }
 
     }
