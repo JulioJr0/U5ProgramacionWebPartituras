@@ -16,15 +16,21 @@ namespace U5ProgWebPartituras.Controllers
         public IActionResult Index()
         {
             var vm = PartituraService.GetPartiturasRecientesYXGenero();
+            if (vm == null)
+            {
+                vm = new IndexViewModel();  // Fallback
+            }
             return View(vm);
+            //var vm = PartituraService.GetPartiturasRecientesYXGenero();
+            //return View(vm);
         }
-        public IActionResult Genero(string id)
+        public IActionResult Genero(string? id)
         {
             if (id == null)
             {
                 return RedirectToAction("Index");
             }
-            var vm = PartituraService.GetPartiturasOrdenadasXGenero(id);
+            var vm = PartituraService.GetPartiturasOrdenadasXGenero(id!);
             return View(vm);
         }
         public IActionResult Detalles(int? id)

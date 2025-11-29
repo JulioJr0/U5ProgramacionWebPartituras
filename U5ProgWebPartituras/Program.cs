@@ -15,13 +15,16 @@ builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
 var app = builder.Build();
 
 //app.UseRouting();
-
 app.MapControllerRoute(
     name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
-app.MapDefaultControllerRoute();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapDefaultControllerRoute();
 
 app.UseStaticFiles();
 

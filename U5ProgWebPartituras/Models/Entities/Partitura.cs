@@ -22,7 +22,7 @@ public partial class Partitura
 
     public int IdCompositor { get; set; }
 
-    public virtual Compositor IdCompositorNavigation { get; set; } = null!;
+    public virtual Compositor? IdCompositorNavigation { get; set; }
 
-    public virtual Genero IdGeneroNavigation { get; set; } = null!;
+    public virtual Genero? IdGeneroNavigation { get; set; }
 }

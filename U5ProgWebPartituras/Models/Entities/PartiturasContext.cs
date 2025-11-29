@@ -72,12 +72,12 @@ public partial class PartiturasContext : DbContext
 
             entity.HasOne(d => d.IdCompositorNavigation).WithMany(p => p.Partitura)
                 .HasForeignKey(d => d.IdCompositor)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_Partitura_Compositor");
 
             entity.HasOne(d => d.IdGeneroNavigation).WithMany(p => p.Partitura)
                 .HasForeignKey(d => d.IdGenero)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_Partitura_Genero");
         });
 

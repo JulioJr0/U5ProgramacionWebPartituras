@@ -1,0 +1,173 @@
+﻿@model U5ProgWebPartituras.Models.ViewModels.DetallesViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section HeaderButtons {
+    <a href="~/Home/Index" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        <span>Volver al Inicio</span>
+    </a>
+}
+
+@{
+    string partituraFileName = $"{Model.Id}.pdf"; // Fallback
+    string partituraExtension = System.IO.Path.GetExtension(partituraFileName).ToLowerInvariant().TrimStart('.');
+    string partituraUrl = $"/partituras/{partituraFileName}";
+
+    string audioFileName = $"{Model.Id}.wav"; // Fallback
+    string audioUrl = $"/audios/{audioFileName}";
+}
+
+<article class="news-header">
+    <h1 class="news-title">@Model.Titulo</h1>
+
+    <div class="news-meta">
+        <span class="meta-item">
+            <i class="fas fa-user-edit"></i> Compositor: @Model.Compositor
+        </span>
+        <span class="meta-item">
+            <i class="fas fa-layer-group"></i> Género: @Model.GeneroMusical
+        </span>
+        <span class="meta-item">
+            <i class="fas fa-chart-line"></i> Dificultad: @Model.Dificultad
+        </span>
+    </div>
+
+    <div class="news-content mb-4">
+        <h2>Descripción General</h2>
+        <p><strong>Instrumentación:</strong> @Model.Instrumentacion</p>
+        <p class="text-muted">@Model.Descripcion</p>
+    </div>
+
+    <div class="news-image-container">
+        <h3 class="mb-3">Previsualización de Partitura (@partituraExtension.ToUpper())</h3>
+
+        @if (partituraExtension == "pdf")
+        {
+            <iframe src="@partituraUrl" class="partitura-visor" title="Visor de Partitura @Model.Titulo" frameborder="0"></iframe>
+        }
+        else if (partituraExtension == "jpg" || partituraExtension == "jpeg" || partituraExtension == "png")
+        {
+            <img src="@partituraUrl" alt="Partitura - @Model.Titulo" class="partitura-image">
+        }
+        else
+        {
+            <img src="https://placehold.co/800x600/CCCCCC/333333?text=Partitura+no+disponible" alt="Archivo no disponible" class="partitura-image">
+        }
+
+    </div>
+</article>
+
+<section class="comments-section mt-5">
+    <h2 class="comments-title">Archivos y Audio</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Id.ToString()))
+    {
+        <div class="audio-player mb-4">
+            <h3><i class="fas fa-headphones"></i> Reproducir Audio</h3>
+            <audio controls class="w-100">
+                <source src="@audioUrl" type="audio/mpeg">
+                Tu navegador no soporta la reproducción de audio.
+            </audio>
+        </div>
+    }
+
+    <div class="downloads-container">
+        <h3><i class="fas fa-download"></i> Descargar Archivos</h3>
+        <div class="d-flex gap-3 mt-3">
+            <a href="@partituraUrl" class="submit-button" download>
+                <i class="fas fa-file-pdf"></i> Descargar Partitura (@partituraExtension.ToUpper())
+            </a>
+
+            @if (!string.IsNullOrEmpty(Model.Id.ToString()))
+            {
+                <a href="@audioUrl" class="submit-button secondary" download>
+                    <i class="fas fa-file-audio"></i> Descargar Audio (MP3)
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="comments-section mt-5">
+    <h2 class="comments-title">Compositor</h2>
+    <p><strong>Nacionalidad:</strong> @Model.Nacionalidad</p>
+    @Html.Raw(Model.Biografia)
+</section>
+<style>
+ 
+    .news-header {
+        padding-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 30px;
+    }
+
+    .news-title {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .news-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+        color: #6c757d;
+    }
+
+    .meta-item i {
+        margin-right: 5px;
+    }
+
+    .news-image-container {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .partitura-visor {
+        width: 100%;
+        height: 80vh; 
+        border: 1px solid #ccc;
+    }
+
+    .partitura-image {
+        max-width: 100%;
+        max-height: 80vh;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+    }
+
+    .submit-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .submit-button.secondary {
+            background-color: #6c757d;
+        }
+
+            .submit-button.secondary:hover {
+                background-color: #5a6268;
+            }
+
+    .news-content h2, .comments-title {
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+</style>
