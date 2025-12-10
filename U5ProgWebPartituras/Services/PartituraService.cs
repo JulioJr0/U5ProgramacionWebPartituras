@@ -84,7 +84,9 @@ namespace U5ProgWebPartituras.Services
             }
             else
             {
-                throw new ArgumentException("Genero no encontrado");
+                GeneroViewModel vm = new();
+                return vm;
+                //throw new ArgumentException("Genero no tiene partituras");
             }
 
         }
@@ -94,17 +96,30 @@ namespace U5ProgWebPartituras.Services
                 .Where(x=> x.Id == id && x.IdCompositorNavigation != null && x.IdGeneroNavigation != null).FirstOrDefault();
             if (entidad != null)
             {
+                string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "partituras");
+                string pdf = Path.Combine(basePath, $"{id}.pdf");
+                string png = Path.Combine(basePath, $"{id}.png");
+                string jpg = Path.Combine(basePath, $"{id}.jpg");
+                string jpeg = Path.Combine(basePath, $"{id}.jpeg");
+
+                string extension = ""; // default
+                if (System.IO.File.Exists(pdf)) extension = "pdf";
+                else if (System.IO.File.Exists(png)) extension = "png";
+                else if (System.IO.File.Exists(jpg)) extension = "jpg";
+                else if (System.IO.File.Exists(jpeg)) extension = "jpeg";
+
                 DetallesViewModel vm = new()
                 {
                     Id = id??0,
-                    Dificultad = entidad.
+                    Dificultad = entidad.Dificultad,
                     Titulo = entidad.Titulo,
                     Descripcion = entidad.Descripcion,
                     Instrumentacion = entidad.Instrumentacion??"Instrumento: ?",
                     Compositor = entidad.IdCompositorNavigation.Nombre,
                     GeneroMusical = entidad.IdGeneroNavigation.Nombre,
                     Nacionalidad = entidad.IdCompositorNavigation.Nacionalidad,
-                    Biografia = entidad.IdCompositorNavigation.Biografia
+                    Biografia = entidad.IdCompositorNavigation.Biografia,
+                    ExtensionPartitura = extension
                 };
                 return vm;
             }

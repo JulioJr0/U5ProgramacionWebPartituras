@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Partituras - Repositorio</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-file-alt"></i>
+            Repositorio de Partituras
+        </div>
+        <nav class="nav-links">
+            <a href="Principal.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
+            <a href="#" class="nav-link active"><i class="fas fa-user-shield"></i> Administración</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        
+        <h1 class="main-title">Administración de Partituras</h1>
+        <p class="subtitle">Gestiona el catálogo completo de partituras musicales</p>
+
+        <section class="admin-panel">
+            
+            <div class="admin-header">
+                <h2>Catálogo de Partituras</h2>
+                <p class="item-count">4 de 4 partituras</p>
+                <button class="add-score-btn"><i class="fas fa-plus"></i> Agregar Partitura</button>
+            </div>
+
+            <div class="filter-bar">
+                
+                <div class="filter-group-admin">
+                    <select class="admin-filter-select">
+                        <option>Todos los géneros</option>
+                        <option>Clásico</option>
+                        <option>Jazz</option>
+                        <option>Banda Sonora</option>
+                        <option>Música de Cámara</option>
+                    </select>
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="admin-table-wrapper">
+                <table class="score-admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Compositor</th>
+                            <th>Género</th>
+                            <th>Dificultad</th>
+                            <th>Instrumentación</th>
+                            <th class="actions-column">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Sonata para Piano n.º 16 en Do Mayor (K. 545)</td>
+                            <td>Wolfgang Amadeus Mozart</td>
+                            <td>Clásico</td>
+                            <td><span class="badge badge-medium">Intermedio</span></td>
+                            <td>Piano Solo</td>
+                            <td class="actions-column">
+                                <button class="action-btn edit-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Maple Leaf Rag</td>
+                            <td>Scott Joplin</td>
+                            <td>Jazz</td>
+                            <td><span class="badge badge-medium">Intermedio</span></td>
+                            <td>Piano Solo</td>
+                            <td class="actions-column">
+                                <button class="action-btn edit-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Hedwig's Theme</td>
+                            <td>John Williams</td>
+                            <td>Banda Sonora</td>
+                            <td><span class="badge badge-light-medium">Fácil-Intermedio</span></td>
+                            <td>Orquesta / Piano</td>
+                            <td class="actions-column">
+                                <button class="action-btn edit-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Fuga en Sol menor (BWV 578)</td>
+                            <td>Johann Sebastian Bach</td>
+                            <td>Clásico</td>
+                            <td><span class="badge badge-advanced">Avanzado</span></td>
+                            <td>Órgano</td>
+                            <td class="actions-column">
+                                <button class="action-btn edit-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>

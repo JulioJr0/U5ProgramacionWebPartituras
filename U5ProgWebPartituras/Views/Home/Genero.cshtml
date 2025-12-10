@@ -1,58 +1,110 @@
 ﻿@model U5ProgWebPartituras.Models.ViewModels.GeneroViewModel
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Género: @Model.Nombre</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clásico - Repositorio de Partituras</title>
+    <link rel="stylesheet" href="~/scripts/Styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        .badge-expert {
+            background-color: darkred;
+            color: white;
         }
-
-        h1 {
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-            a:hover {
-                text-decoration: underline;
-            }
     </style>
 </head>
 <body>
-    <h1>Género: @Model.Nombre</h1>
-    <p>@Model.Descripcion</p>
-    <p>Total Partituras: @Model.NumeroPartituras</p>
 
-    <h2>Partituras</h2>
-    <ul>
-        @foreach (var p in Model.Partituras)
-        {
-            <li>
-                <strong>@p.Titulo</strong> - @p.Compositor<br>
-                Dificultad: @p.Dificultad<br>
-                Instrumentación: @p.Instrumentacion<br>
-                Descripción: @p.Descripcion<br>
-                <a href="@Url.Action("Detalles", "Home", new { id = p.Id })">Ver Detalles</a>
-            </li>
-        }
-    </ul>
-    <a href="@Url.Action("Index", "Home")">Volver al Inicio</a>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-file-alt"></i>
+            Repositorio de Partituras
+        </div>
+        <nav class="nav-links">
+            <a href="@Url.Action("Index", "Home")" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
+            <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="nav-link"><i class="fas fa-user-shield"></i> Administración</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+
+        <h1 class="main-title">Explorando Género: @Model.Nombre</h1>
+
+        <div class="explorer-layout">
+
+
+            <section class="results-list">
+                <!--descripcion del viewmodel falta aquí-->
+                @if (Model.Partituras != null)
+                {
+                    <p class="result-summary">Mostrando <strong>@(Model.NumeroPartituras) partituras</strong> de <strong>@Model.Nombre</strong>.</p>
+                }
+                else
+                {
+                    <p class="result-summary"><strong>No hay partituras</strong>.</p>
+                }
+                @if(Model.Partituras != null)
+                {
+                    @foreach (var g in Model.Partituras)
+                    {
+                        <div class="score-list-item">
+                            <div class="score-info">
+                                <h3>@g.Titulo</h3>
+                                <p class="score-composer"><i class="fas fa-user"></i> @g.Compositor</p>
+                                <p class="score-description">@g.Descripcion</p>
+                                <span class="tag tag-clásico">Clásico</span><!--cambiar diseño --><!--agregar propiedad al viewmodel-->
+                                @{
+                                    string claseBadge = "";
+                                    switch (g.Dificultad)
+                                    {
+                                        case "Principiante": claseBadge = "badge"; break;
+                                        case "Fácil": claseBadge = "badge-light-medium"; break;
+                                        case "Intermedio": claseBadge = "badge-medium"; break;
+                                        case "Avanzado": claseBadge = "badge-advanced"; break;
+                                        case "Experto": claseBadge = "badge-expert"; break;
+                                    }
+                                }
+                                <span class="badge @claseBadge">@g.Dificultad</span><!--cambiar diseño -->
+                                <!--instrumentación falta span-->
+                            </div>
+                            <div class="score-actions">
+                                <a href="@Url.Action("Detalles", "Home", new { id = g.Id })" class="btn-details list-btn" style="width:fit-content"><i class="fas fa-eye"></i> Ver</a>
+@*                                 <a href="#" class="btn-details list-btn download-btn"><i class="fas fa-download"></i> Descargar</a><!--descargar copíar de detalles-->
+ *@                            </div>
+                        </div>
+                    }
+                }
+                
+                
+
+                @* <div class="score-list-item">
+                    <div class="score-info">
+                        <h3>Minuet en Sol Mayor (BWV Anh. 114)</h3>
+                        <p class="score-composer"><i class="fas fa-user"></i> Johann Sebastian Bach</p>
+                        <p class="score-description">Una pieza corta y popular, ideal para principiantes en piano.</p>
+                        <span class="tag tag-clásico">Clásico</span>
+                        <span class="badge badge-light-medium">Fácil</span>
+                    </div>
+                    <div class="score-actions">
+                        <a href="#" class="btn-details list-btn"><i class="fas fa-eye"></i> Ver</a>
+                        <a href="#" class="btn-details list-btn download-btn"><i class="fas fa-download"></i> Descargar</a>
+                    </div>
+                </div> *@
+                <!--la paginacion no la tiene el backend-->
+                @* <div class="pagination">
+                    <a href="#">&laquo; Anterior</a>
+                    <a href="#" class="active-page">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">Siguiente &raquo;</a>
+                </div> *@
+
+            </section>
+        </div>
+    </main>
+
 </body>
 </html>

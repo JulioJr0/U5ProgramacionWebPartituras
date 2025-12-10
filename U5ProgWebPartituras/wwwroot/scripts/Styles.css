@@ -1,0 +1,1052 @@
+/* Variables para colores (facilita la modificación) */
+:root {
+    --primary-color: #3f51b5; /* Azul primario para acentos */
+    --text-color: #333;
+    --light-text-color: #555;
+    --background-color: #f8f9fa;
+    --border-color: #ddd;
+    --card-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* ------------------------------------------- */
+/* Estilos Globales y Reset */
+/* ------------------------------------------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--text-color);
+    background-color: #fff; /* Fondo blanco principal */
+    line-height: 1.6;
+}
+
+main {
+    padding: 0 40px; /* Padding general a los lados */
+}
+
+/* ------------------------------------------- */
+/* 1. Barra de Navegación (Header) */
+/* ------------------------------------------- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-right: 8px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--light-text-color);
+    font-weight: 500;
+    padding: 8px 15px;
+    margin-left: 10px;
+    transition: color 0.3s;
+}
+
+.nav-links .active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a i {
+    margin-right: 5px;
+}
+
+/* El botón 'Inicio' en la captura tiene un estilo de botón */
+.nav-links .active {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 15px;
+}
+
+.nav-links .active:hover {
+    background-color: #3344a0;
+    color: #fff;
+}
+
+/* ------------------------------------------- */
+/* 2. Sección de Bienvenida (Hero) */
+/* ------------------------------------------- */
+.hero {
+    text-align: center;
+    padding: 60px 0 80px 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--light-text-color);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* ------------------------------------------- */
+/* 3. Sección de Partituras Destacadas */
+/* ------------------------------------------- */
+.featured h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.card-container {
+    display: flex;
+    gap: 30px; /* Espacio entre las tarjetas */
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    width: 330px; /* Ancho fijo para cada tarjeta */
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Pequeño efecto al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Encabezado de la tarjeta (ícono y etiqueta de dificultad) */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-large {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #5bc0de; /* Un azul para Intermedio */
+}
+
+.badge-medium {
+    background-color: #f0ad4e; /* Amarillo-naranja para Intermedio */
+}
+
+.badge-light-medium {
+    background-color: #5cb85c; /* Verde para Fácil-Intermedio */
+}
+/* Nuevo badge para Avanzado */
+.badge-advanced {
+    background-color: #dc143c; /* Rojo */
+    color: white;
+    /*# FFFF00*/
+}
+
+/* Cuerpo de la tarjeta */
+.card-body h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.composer {
+    font-size: 0.95rem;
+    color: var(--light-text-color);
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.composer i {
+    margin-right: 5px;
+    color: #888;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    min-height: 70px; /* Para que todas las tarjetas tengan una altura similar */
+}
+
+/* Pie de página de la tarjeta (etiqueta y botón) */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.tag {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Colores específicos para etiquetas (Tags) */
+.tag-clásico { background-color: #007bff; } /* Azul */
+.tag-jazz { background-color: #6c757d; } /* Gris */
+.tag-banda-sonora { background-color: #28a745; } /* Verde */
+
+.btn-details {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: var(--primary-color);
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-details:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-details i {
+    margin-left: 8px;
+}
+
+/* ------------------------------------------- */
+/* Estilos Específicos para la Página de Géneros */
+/* ------------------------------------------- */
+
+.main-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.genre-container {
+    display: flex;
+    flex-wrap: wrap; /* Esencial para el diseño en cuadrícula */
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+.genre-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(33.333% - 13.333px); /* 3 tarjetas por fila con gap */
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el footer hacia abajo */
+    min-height: 200px;
+    transition: transform 0.2s;
+}
+
+.genre-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.genre-card h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.genre-description {
+    font-size: 0.95rem;
+    color: var(--light-text-color);
+    margin-bottom: 15px;
+    flex-grow: 1; /* Permite que la descripción ocupe el espacio restante */
+}
+
+.genre-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.stat-count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--light-text-color);
+}
+
+.zero-count {
+    color: #dc3545; /* Rojo para 0 partituras */
+}
+
+.explore-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.explore-link:hover {
+    color: #3344a0;
+}
+/* ------------------------------------------- */
+/* Estilos para la Vista de Exploración de Género */
+/* ------------------------------------------- */
+
+.explorer-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+
+/* ------------------ Sidebar de Filtros ------------------ */
+.sidebar-filters {
+    width: 280px; /* Ancho fijo para el panel de filtros */
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.filter-box {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky; /* Se queda fijo al hacer scroll */
+    top: 20px; /* Distancia desde la parte superior */
+}
+
+.filter-box h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.filter-box i {
+    margin-right: 8px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.filter-group input[type="text"],
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.checkbox-container {
+    display: block;
+    font-weight: 400 !important;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.apply-filters-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.apply-filters-btn:hover {
+    background-color: #3344a0;
+}
+
+/* ------------------ Lista de Resultados ------------------ */
+.results-list {
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+.result-summary {
+    font-size: 1rem;
+    color: var(--light-text-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.score-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.score-info {
+    flex-grow: 1;
+}
+
+.score-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.score-composer {
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.score-description {
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    margin-bottom: 10px;
+}
+
+.score-info .tag {
+    margin-right: 8px;
+}
+
+/* Contenedor de acciones (Ver y Descargar) */
+.score-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+.list-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}
+
+.download-btn {
+    background-color: #28a745; /* Verde para descargar */
+    color: white !important;
+}
+
+.download-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* ------------------ Paginación ------------------ */
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination a {
+    color: var(--primary-color);
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.pagination a.active-page {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+}
+
+.pagination a:hover:not(.active-page) {
+    background-color: #f0f0f0;
+}
+
+/* ------------------------------------------- */
+/* Estilos para la Vista de Detalles de Partitura */
+/* ------------------------------------------- */
+
+.score-detail-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding-bottom: 50px;
+}
+
+/* ------------------ Visor de Partitura ------------------ */
+.score-viewer {
+    flex: 2; /* Ocupa 2/3 del espacio */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.viewer-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.viewer-frame-wrapper {
+    width: 100%;
+    height: 600px; /* Altura predeterminada para el visor */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.viewer-frame-wrapper iframe {
+    /* Asegura que el iframe llene el contenedor */
+    display: block; 
+}
+
+
+/* ------------------ Panel de Información ------------------ */
+.score-info-panel {
+    flex: 1; /* Ocupa 1/3 del espacio */
+}
+
+.detail-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.metadata-group {
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 25px;
+    background-color: var(--background-color);
+}
+
+.metadata-item {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--light-text-color);
+}
+
+.metadata-item i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.metadata-item strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.metadata-item .tag, .metadata-item .badge {
+    padding: 3px 8px;
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+/* Reproductor de Audio */
+.audio-player-box {
+    margin-bottom: 25px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.audio-player-box h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.description-box {
+    margin-bottom: 30px;
+}
+
+.description-box h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* ------------------------------------------- */
+/* Estilos Específicos para la Página de Administración */
+/* ------------------------------------------- */
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--light-text-color);
+    margin-bottom: 30px;
+    padding-left: 4px;
+}
+
+.admin-panel {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 50px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.item-count {
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    margin-right: 20px;
+}
+
+/* Botón de Agregar Partitura */
+.add-score-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-score-btn:hover {
+    background-color: #3344a0;
+}
+
+.add-score-btn i {
+    margin-right: 8px;
+}
+
+/* Barra de Filtros (solo con selectores) */
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filter-group-admin {
+    flex-grow: 1;
+}
+
+.admin-filter-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    background-color: #f9f9f9;
+}
+
+/* Estilos de la Tabla */
+.admin-table-wrapper {
+    overflow-x: auto; /* Permite scroll horizontal en móviles */
+    width: 100%;
+}
+
+.score-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    min-width: 800px; /* Asegura que la tabla no sea muy estrecha en el escritorio */
+}
+
+.score-admin-table th, .score-admin-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.score-admin-table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+    color: var(--light-text-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.score-admin-table tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* Columna de Dificultad (usando los badges existentes) */
+.score-admin-table .badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+
+/* Acciones */
+.actions-column {
+    text-align: center;
+    width: 100px;
+}
+
+.action-btn {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 2px;
+    transition: background-color 0.2s;
+}
+
+.edit-btn {
+    color: #ffc107; /* Amarillo */
+    background-color: #fff9e6;
+    border-color: #ffeeba;
+}
+
+.edit-btn:hover {
+    background-color: #ffeeba;
+}
+
+.delete-btn {
+    color: #dc3545; /* Rojo */
+    background-color: #fde8ea;
+    border-color: #f5c6cb;
+}
+
+.delete-btn:hover {
+    background-color: #f5c6cb;
+}
+/* ------------------------------------------- */
+/* Estilos Específicos para el Formulario de Agregar */
+/* ------------------------------------------- */
+
+.add-score-form {
+    padding: 10px 0;
+}
+
+.add-score-form h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.add-score-form hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 30px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+/* Estilos de los campos de texto y textarea (reutilizando estilos anteriores) */
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(63, 81, 181, 0.2);
+}
+
+/* Campos de Selección Múltiple en una fila */
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.select-group {
+    flex: 1; /* Distribuye los 3 selectores uniformemente */
+}
+
+/* Campos File */
+.file-group {
+    border: 1px dashed #ccc;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.file-group label i {
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+.file-group input[type="file"] {
+    border: none;
+    padding: 8px 0;
+    background-color: transparent;
+}
+
+.file-note {
+    font-size: 0.85rem;
+    color: var(--light-text-color);
+    margin-top: 5px;
+}
+
+/* Botones de Acción */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.form-actions button, .form-actions a {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity 0.3s;
+}
+
+.submit-btn {
+    background-color: #28a745; /* Verde para guardar */
+    color: white;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: #1e7e34;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0; /* Gris para limpiar */
+    color: var(--text-color);
+    border: 1px solid #ccc;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.back-btn {
+    background-color: #5bc0de; /* Azul claro para volver */
+    color: white;
+    border: none;
+}
+
+.back-btn:hover {
+    background-color: #46b8da;
+}
+/**/
+/* Centramos la tarjeta */
+.delete-panel-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Caja de peligro grande */
+.big-danger-box {
+    background: #ffdddd;
+    border: 2px solid #ff6b6b;
+    color: #b10000;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* Tarjeta centrada */
+.delete-card {
+    background: #ffffff;
+    width: 600px;
+    max-width: 90%;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Título delete */
+.delete-title {
+    color: #b10000;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Mensaje */
+.delete-message {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Lista de datos */
+.delete-info-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+    .delete-info-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1rem;
+    }
+
+/* Botón rojo fuerte */
+.btn-danger-delete {
+    background-color: #d72638;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+    .btn-danger-delete:hover {
+        background-color: #a61e2c;
+    }
+
+/* Botón cancelar */
+.btn-cancel-action {
+    background-color: #666;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+    .btn-cancel-action:hover {
+        background-color: #444;
+    }
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: block; 
+    margin-top: 5px;
+    padding: 3px 0;
+    position: relative;
+    padding-left: 20px;
+}
+
+.field-validation-error {
+    padding-left: 20px; 
+}
+    .field-validation-error::before {
+        content: "\f06a"; 
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+    }
+
+.form-group input.input-validation-error,
+.form-group textarea.input-validation-error,
+.form-group select.input-validation-error {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}

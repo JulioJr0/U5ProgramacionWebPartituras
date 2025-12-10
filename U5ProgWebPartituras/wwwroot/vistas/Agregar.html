@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Partitura - Repositorio</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-file-alt"></i>
+            Repositorio de Partituras
+        </div>
+        <nav class="nav-links">
+            <a href="Principal.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
+            <a href="AdminPartiturasIndex.html" class="nav-link active"><i class="fas fa-user-shield"></i> Administración</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        
+        <h1 class="main-title">Agregar Nueva Partitura</h1>
+        <p class="subtitle">Completa el formulario para ingresar una nueva partitura al catálogo.</p>
+
+        <section class="admin-panel">
+            
+            <form class="add-score-form" method="POST" enctype="multipart/form-data">
+                
+                <h2><i class="fas fa-info-circle"></i> Información de la Partitura</h2>
+                
+                <div class="form-group">
+                    <label for="titulo">Título de la Partitura:</label>
+                    <input type="text" id="titulo" name="Titulo" placeholder="Ej: Sonata para Piano n.º 16 en Do Mayor (K. 545)" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="compositor">Instrumentacion:</label>
+                    <input type="text" id="compositor" name="Compositor" placeholder="Ej: Wolfgang Amadeus Mozart" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="Descripcion" rows="4" placeholder="Breve descripción de la obra y su contexto." required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group select-group">
+                        <label for="genero">Género (IdGenero)</label>
+                        <select id="genero" name="IdGenero" required>
+                            <option value="" disabled selected>Selecciona el Género</option>
+                            <option value="1">Clásico</option> 
+                            <option value="2">Jazz</option>
+                            <option value="3">Banda Sonora</option>
+                            <option value="4">Pop/Rock</option>
+                            <option value="5">Música de Cámara</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group select-group">
+                        <label for="dificultad">Dificultad (Dificultad)</label>
+                        <select id="dificultad" name="Dificultad" required>
+                            <option value="" disabled selected>Selecciona la Dificultad</option>
+                            <option value="Fácil">Fácil</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzado">Avanzado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group select-group">
+                        <label for="instrumentacion">Compositor</label>
+                        <select id="instrumentacion" name="Instrumentacion" required>
+                            <option value="" disabled selected>Selecciona el Instrumento</option>
+                            <option value="Piano Solo">ndjnj</option>
+                            <option value="Órgano">bfj</option>
+                            <option value="Violín">Vnfjv</option>
+                            <option value="Orquesta / Piano">Orquesta / Piano</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h2><i class="fas fa-upload"></i> Subida de Archivos (Para campos futuros)</h2>
+                
+                <div class="form-group file-group">
+                    <label for="file_pdf"><i class="fas fa-file-pdf"></i> Archivo PDF de Partitura</label>
+                    <input type="file" id="file_pdf" name="ArchivoPDF" accept="application/pdf" required>
+                    <p class="file-note">Sube la partitura principal en formato PDF. (Se requiere un campo adicional en la tabla para la ruta)</p>
+                </div>
+
+                <div class="form-group file-group">
+                    <label for="file_audio"><i class="fas fa-volume-up"></i> Archivo de Audio (Muestra)</label>
+                    <input type="file" id="file_audio" name="ArchivoAudio" accept="audio/*">
+                    <p class="file-note">Opcional: Sube un fragmento en MP3 u otro formato de audio. (Se requiere un campo adicional en la tabla para la ruta)</p>
+                </div>
+
+                <hr>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn"><i class="fas fa-check"></i> Guardar Partitura</button>
+                    <a href="administracion.html" class="back-btn"><i class="fas fa-arrow-left"></i> Volver a Administración</a>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

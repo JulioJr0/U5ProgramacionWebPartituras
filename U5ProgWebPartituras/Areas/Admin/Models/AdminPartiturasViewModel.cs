@@ -72,22 +72,3 @@ namespace U5ProgWebPartituras.Areas.Admin.Models
 
     }
 }
-
-
-//< div class= "form-group" >
-//    < label > Título </ label >
-//    @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
-//    @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
-//</ div >
-
-//@Html.ValidationMessageFor(
-//    expression: model => model.NombreDelCampo,
-//    message: "",                                  // mensaje por defecto del modelo
-//    htmlAttributes: new { @class = "text-danger" } // clases CSS opcionales
-//)
-
-//< div class= "form-group" >
-//    < label for= "Titulo" > Título </ label >
-//    @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
-//    @Html.ValidationMessageFor(m => m.Titulo, "", new { @class = "text-danger" })
-//</ div >

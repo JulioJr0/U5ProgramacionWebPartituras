@@ -1,82 +1,141 @@
 ﻿@model U5ProgWebPartituras.Models.ViewModels.IndexViewModel
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Partituras Recientes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio de Partituras</title>
+    <link rel="stylesheet" href="~/scripts/Styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-            a:hover {
-                text-decoration: underline;
-            }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
+        .badge-expert {
+            background-color: darkred;
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
         }
-
-            .btn:hover {
-                background-color: #0056b3;
-            }
     </style>
 </head>
 <body>
-    <h1>Partituras Recientes</h1>
-    <h2>Últimas Partituras</h2>
-    <ul>
-        @foreach (var p in Model.PartiturasRecientes)
-        {
-            <li>
-                <strong>@p.Titulo</strong> - @p.Compositor (@p.GeneroMusical)<br>
-                Dificultad: @p.Dificultad<br>
-                Descripción: @p.Descripcion<br>
-                <a href="@Url.Action("Detalles", "Home", new { id = p.Id })">Ver Detalles</a>
-            </li>
-        }
-    </ul>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-file-alt"></i> Repositorio de Partituras
+        </div>
+        <nav class="nav-links">
+            <a href="@Url.Action("Index", "Home")" class="nav-link active"><i class="fas fa-home"></i> Inicio</a>
+            <a href="@Url.Action("Index", "Home", new { area = "Admin"})" class="nav-link"><i class="fas fa-user-shield"></i> Administración</a>
+        </nav>
+    </header>
 
-    <h2>Géneros Musicales</h2>
-    <ul>
-        @foreach (var g in Model.GenerosMusicales)
-        {
-            <li>
-                <strong>@g.Nombre</strong> - @g.NumeroPartituras partituras<br>
-                Descripción: @g.Descripcion<br>
-                <a href="@Url.Action("Genero", "Home", new { id = g.Nombre })">Ver Partituras</a>
-            </li>
-        }
-    </ul>
+    <main>
+        <section class="hero">
+            <h1>Bienvenido al Repositorio de Partituras</h1>
+            <p>Explora nuestra colección de partituras musicales de diversos géneros y compositores. Visualiza, escucha y descubre obras maestras de la música.</p>
+        </section>
 
-    <!-- Botón para navegar al index de admin -->
-    <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="btn">Ir a Administración</a>
+        <section class="featured">
+            <h2>Partituras Recientes</h2>
+
+            <div class="card-container">
+                @foreach(var p in Model.PartiturasRecientes)
+                {
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-file-alt icon-large"></i>
+                            @{
+                                string claseBadge = "";
+                                switch (p.Dificultad)
+                                {
+                                    case "Principiante": claseBadge = "badge"; break;
+                                    case "Fácil": claseBadge = "badge-light-medium"; break;
+                                    case "Intermedio": claseBadge = "badge-medium"; break;
+                                    case "Avanzado": claseBadge = "badge-advanced"; break;
+                                    case "Experto": claseBadge = "badge-expert"; break;
+                                }
+                            }
+
+                            <span class="badge @claseBadge">@p.Dificultad</span> <!--dificultad cambiar diseño del badge-->
+                        </div>
+                        <div class="card-body">
+                            <h3>@p.Titulo</h3>
+                            <p class="composer"><i class="fas fa-user"></i>@p.Compositor</p>
+                            <p class="description">@p.Descripcion</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="tag tag-banda-sonora">@p.GeneroMusical</span><!--cambiar diseño-->
+                            <a href="@Url.Action("Detalles", "Home", new {id = p.Id})" class="btn-details">Ver detalles <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                }
+                @* <option value="Principiante">Principiante</option>
+                <option value="Fácil">Fácil</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+                <option value="Experto">Experto</option> *@
+                @* <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt icon-large"></i>
+                        <span class="badge badge-medium">Intermedio</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Maple Leaf Rag</h3>
+                        <p class="composer"><i class="fas fa-user"></i> Scott Joplin</p>
+                        <p class="description">La pieza que definió el género Ragtime, con un ritmo contagioso y sincopado.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="tag tag-jazz">Jazz</span>
+                        <a href="Detalles Partitura.html" class="btn-details">Ver detalles <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt icon-large"></i>
+                        <span class="badge badge-light-medium">Fácil-Intermedio</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Hedwig's Theme</h3>
+                        <p class="composer"><i class="fas fa-user"></i> John Williams</p>
+                        <p class="description">Tema principal de la saga Harry Potter, evocador y mágico.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="tag tag-banda-sonora">Banda Sonora</span>
+                        <a href="Detalles Partitura.html" class="btn-details">Ver detalles <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div> *@
+
+            </div>
+        </section>
+
+        <section class="genre-exploration">
+
+            <h1 class="main-title">Explora por Género</h1>
+
+            <div class="genre-container">
+                @foreach(var p in Model.GenerosMusicales)
+                {
+                    <div class="genre-card">
+                        <h2>@p.Nombre</h2>
+                        <p class="genre-description">@p.Descripcion</p>
+                        <div class="genre-stats">
+                            <!--cambiar estilo si tiene 0 partituras-->
+                            <span class="@(p.NumeroPartituras == 0 ? "zero-count" : "stat-count")">@p.NumeroPartituras partituras</span><!--esta propiedad no la tiene el viewmodel-->
+                            <a href="@Url.Action("Genero", "Home", new {id = p.Nombre})" class="explore-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                }
+                
+                @* <div class="genre-card">
+                    <h2>Música de Cámara</h2>
+                    <p class="genre-description">Obras compuestas para un pequeño grupo de instrumentos, tradicionalmente sin director.</p>
+                    <div class="genre-stats">
+                        <span class="stat-count zero-count">0 partituras</span> <!-- zero-count diseño -->
+                        <a href="#" class="explore-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div> *@
+
+            </div>
+        </section>
+    </main>
 </body>
 </html>

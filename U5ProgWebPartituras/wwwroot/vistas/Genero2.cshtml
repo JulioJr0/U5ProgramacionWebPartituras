@@ -1,0 +1,58 @@
+﻿@model U5ProgWebPartituras.Models.ViewModels.GeneroViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Género: @Model.Nombre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <h1>Género: @Model.Nombre</h1>
+    <p>@Model.Descripcion</p>
+    <p>Total Partituras: @Model.NumeroPartituras</p>
+
+    <h2>Partituras</h2>
+    <ul>
+        @foreach (var p in Model.Partituras)
+        {
+            <li>
+                <strong>@p.Titulo</strong> - @p.Compositor<br>
+                Dificultad: @p.Dificultad<br>
+                Instrumentación: @p.Instrumentacion<br>
+                Descripción: @p.Descripcion<br>
+                <a href="@Url.Action("Detalles", "Home", new { id = p.Id })">Ver Detalles</a>
+            </li>
+        }
+    </ul>
+    <a href="@Url.Action("Index", "Home")">Volver al Inicio</a>
+</body>
+</html>

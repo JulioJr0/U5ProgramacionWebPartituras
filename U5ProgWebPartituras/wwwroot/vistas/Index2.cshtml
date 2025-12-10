@@ -1,0 +1,82 @@
+﻿@model U5ProgWebPartituras.Models.ViewModels.IndexViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Partituras Recientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <h1>Partituras Recientes</h1>
+    <h2>Últimas Partituras</h2>
+    <ul>
+        @foreach (var p in Model.PartiturasRecientes)
+        {
+            <li>
+                <strong>@p.Titulo</strong> - @p.Compositor (@p.GeneroMusical)<br>
+                Dificultad: @p.Dificultad<br> <!--cambiar estilo-->
+                Descripción: @p.Descripcion<br>
+                <a href="@Url.Action("Detalles", "Home", new { id = p.Id })">Ver Detalles</a>
+            </li>
+        }
+    </ul>
+
+    <h2>Géneros Musicales</h2>
+    <ul>
+        @foreach (var g in Model.GenerosMusicales)
+        {
+            <li>
+                <strong>@g.Nombre</strong> - @g.NumeroPartituras partituras<br>
+                Descripción: @g.Descripcion<br>
+                <a href="@Url.Action("Genero", "Home", new { id = g.Nombre })">Ver Partituras</a>
+            </li>
+        }
+    </ul>
+
+    <!-- Botón para navegar al index de admin -->
+    <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="btn">Ir a Administración</a>
+</body>
+</html>
